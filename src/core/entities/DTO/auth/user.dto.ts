@@ -10,7 +10,7 @@ export class UserDto {
   groups?: GroupDto[];
 
   constructor(user: User) {
-    this.userId = user.userId;
+    this.userId = user.id;
     this.firstName = user.firstName;
     this.lastName = user.lastName;
   }

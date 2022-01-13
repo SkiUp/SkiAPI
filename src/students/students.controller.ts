@@ -30,7 +30,7 @@ export class StudentsController {
 
     console.log(test.filter(x => !query.level || x.a == query.level));
 
-    return this.studentService.getAll(user.userId, req.params);
+    return this.studentService.getAll(user.id, req.params);
   }
 
   @Get(':id')

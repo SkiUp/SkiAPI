@@ -15,7 +15,7 @@ export class User {
   lastName: string;
 
   @Column()
-  password: string;
+  password?: string;
 
   @OneToMany(
     () => Departementstaff,
@@ -38,11 +38,11 @@ export class User {
   constructor(
     id: number,
     firstName: string,
-    lastName: string,
-    password: string,
+    lastName: string,   
     departementstaffs: Departementstaff[],
     groups: Group[],
     logins: Login[],
+    password?: string,
   ) {
     this.id = id;
     this.firstName = firstName;

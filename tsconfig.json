@@ -11,7 +11,8 @@
     "outDir": "./dist",
     "preserveSymlinks": true,
     "strict": true,
-    "incremental": true
+    "incremental": true,
+    "strictNullChecks": false,
   },
   "paths": {
     "~groups/*": ["src/groups/*"],

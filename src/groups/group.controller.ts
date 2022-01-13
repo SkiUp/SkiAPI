@@ -17,7 +17,7 @@ export class GroupController {
     @Req() req: any,
     @Query() query: any,
   ): Promise<Group[]> {
-    return this.groupService.getAll(user.userId, query);
+    return this.groupService.getAll(user.id, query);
   }
 
   // todo wtf was this
