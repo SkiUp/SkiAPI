@@ -1,10 +1,11 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { ExericeTypes } from './exercice-type.enum';
 import { Level } from './level';
 
 @Entity('Exercice', { schema: 'ski' })
 export class Exercice {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   description: string;
@@ -12,8 +13,8 @@ export class Exercice {
   @Column()
   terrain: string;
 
-  @Column()
-  type: number;
+  @Column({type: "enum", enum:ExericeTypes})
+  type: ExericeTypes;
 
   @ManyToOne(
     () => Level,
@@ -22,7 +23,7 @@ export class Exercice {
   level: Level;
 
   constructor(
-    id: number,
+    id: string,
     description: string,
     terrain: string,
     type: number,

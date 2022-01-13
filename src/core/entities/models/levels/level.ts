@@ -12,7 +12,7 @@ import { Group } from '../../group';
 @Entity('Level', { schema: 'ski' })
 export class Level {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
   name: string;
@@ -42,7 +42,7 @@ export class Level {
   groups?: Group[];
 
   constructor(
-    id: number,
+    id: string,
     name: string,
     departements: Departement[],
     exercices: Exercice[],

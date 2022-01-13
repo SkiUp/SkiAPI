@@ -1,4 +1,4 @@
-export enum ExericeType {
+export enum ExericeTypes {
   MB,
   HB,
   EX,
