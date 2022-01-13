@@ -2,9 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppService } from './app.service';
-import { LevelsModule } from './features/levels/levels.module';
-
 import { Asset, Exercice, Level, Mouvement } from './core/entities/models';
+import { LevelsModule } from './features/levels/levels.module';
 
 @Module({
   imports: [
@@ -15,7 +14,7 @@ import { Asset, Exercice, Level, Mouvement } from './core/entities/models';
       username: 'user',
       password: 'passw0rd',
       database: 'skiv3',
-      entities: [Exercice, Level, Mouvement, Asset],
+      entities: [Level, Exercice, Asset, Mouvement],
       synchronize: true,
     }),
     LevelsModule,
