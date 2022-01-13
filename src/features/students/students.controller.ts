@@ -2,10 +2,10 @@
 import { Controller, Get, Param, Query, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 import { ExtractJwt } from 'passport-jwt';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { UserDeco } from '../core/deocrators/user.decorator';
-import { User } from '../core/entities';
-import { Student } from '../core/entities/student';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
+import { UserDeco } from '../../core/deocrators/user.decorator';
+import { User } from '../../core/entities';
+import { Student } from '../../core/entities/student';
 
 import { StudentsService } from './students.service';
 

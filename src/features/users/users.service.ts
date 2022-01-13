@@ -5,8 +5,8 @@ import {
   Departementpermission,
   Departementpermissionrole,
   Departementstaff,
-} from '../core/entities/models/permissions';
-import { User } from '../core/entities';
+} from '../../core/entities/models/permissions';
+import { User } from '../../core/entities';
 
 @Injectable()
 export class UsersService {

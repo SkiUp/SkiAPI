@@ -12,11 +12,14 @@
     "preserveSymlinks": true,
     "strict": true,
     "incremental": true,
-    "strictNullChecks": false,
+    "strictNullChecks": false
   },
+  "baseUrl": "./src",
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts"],
   "paths": {
-    "~groups/*": ["src/groups/*"],
-    "~core/*": ["src/core/*"],
-    "~entities/*": ["src/core/entities/*"]
+    "@groups/*": ["src/groups/*"],
+    "@core/*": ["src/core/*"],
+    "@entities/*": ["src/core/entities/*"]
   }
 }

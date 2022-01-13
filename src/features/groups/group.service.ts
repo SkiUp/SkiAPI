@@ -2,7 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, MoreThanOrEqual, Repository } from 'typeorm';
-import { Group } from '../core/entities/group';
+import { Group } from '../../core/entities/group';
 import { LevelsService } from '../levels/levels.service';
 import { PermissionsService } from '../permissions/permissions.service';
 

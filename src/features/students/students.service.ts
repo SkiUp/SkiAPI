@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Studentgroup } from '../core/entities/student_group';
+import { Studentgroup } from '../../core/entities/student_group';
 import { GroupService } from '../groups/group.service';
 import { PermissionsService } from '../permissions/permissions.service';
 

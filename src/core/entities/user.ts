@@ -34,22 +34,4 @@ export class User {
     login => login.user,
   )
   logins: Login[];
-
-  constructor(
-    id: number,
-    firstName: string,
-    lastName: string,   
-    departementstaffs: Departementstaff[],
-    groups: Group[],
-    logins: Login[],
-    password?: string,
-  ) {
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.password = password;
-    this.departementstaffs = departementstaffs;
-    this.groups = groups;
-    this.logins = logins;
-  }
 }

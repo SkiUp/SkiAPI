@@ -1,14 +1,11 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { Level } from '../core/entities/models';
-import { GroupService } from '../groups/group.service';
+
+import { Level } from '../../core/entities/models';
 import { LevelsService } from './levels.service';
 
 @Controller('levels')
 export class LevelsController {
-  constructor(
-    private levelsService: LevelsService,
-    private groupService: GroupService,
-  ) {}
+  constructor(private levelsService: LevelsService) {}
 
   @Get()
   GetAll(): Promise<Level[]> {

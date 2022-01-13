@@ -1,19 +1,28 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { ExericeTypes } from './exercice-type.enum';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { ExericeTypes, SlopeTypes } from '../../enum';
+import { AuditableEntity, Asset } from '../core';
 import { Level } from './level';
+import { Mouvement } from './mouvement';
 
-@Entity('Exercice', { schema: 'ski' })
-export class Exercice {
+@Entity()
+export class Exercice extends AuditableEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   description: string;
 
-  @Column()
-  terrain: string;
+  @Column({ type: 'enum', enum: SlopeTypes })
+  slopeType: SlopeTypes;
 
-  @Column({type: "enum", enum:ExericeTypes})
+  @Column({ type: 'enum', enum: ExericeTypes })
   type: ExericeTypes;
 
   @ManyToOne(
@@ -22,17 +31,14 @@ export class Exercice {
   )
   level: Level;
 
-  constructor(
-    id: string,
-    description: string,
-    terrain: string,
-    type: number,
-    level: Level,
-  ) {
-    this.id = id;
-    this.description = description;
-    this.terrain = terrain;
-    this.type = type;
-    this.level = level;
-  }
+  @ManyToMany(
+    () => Mouvement,
+    type => type.exerices,
+  )
+  mouvement: Mouvement;
+  @Column()
+  isOfficial: boolean;
+
+  @OneToOne(() => Asset)
+  asset: Asset;
 }

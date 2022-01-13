@@ -5,10 +5,10 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Level } from './level';
 import { Departementpermissionrole } from './models/permissions/departement_permission_role';
 import { Group } from './group';
 import { Departementstaff } from './models/permissions';
+import { Level } from './models/levels';
 
 @Entity('Departement', { schema: 'ski' })
 export class Departement {
@@ -21,11 +21,11 @@ export class Departement {
   @Column('int', { name: 'LimiteEtudiantsGroupe' })
   limiteEtudiantsGroupe: number;
 
-  @ManyToMany(
-    () => Level,
-    level => level.departements,
-  )
-  levels: Level[];
+  // @ManyToMany(
+  //   () => Level,
+  //   level => level.departements,
+  // )
+  // levels: Level[];
 
   @OneToMany(
     () => Departementpermissionrole,
