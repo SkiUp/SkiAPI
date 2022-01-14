@@ -13,7 +13,7 @@ export class Mouvement {
   @Column()
   description: string;
 
-  @Column()
+  @Column({type:'enum', enum: MouvementCategory})
   mouvementCategory: MouvementCategory;
 
   @Column()

@@ -1,9 +1,9 @@
-import { ExerciceDto } from "./excerice.dto";
+import { ExerciseDto } from "./exercise/exercise.dto";
 
 export class LevelDto {
-    levelId: number;
+    id: string;
     name: string;
-    description: string;
-    nextLevelId: number;
-    exercices: ExerciceDto[] = [];
+    description?: string;
+    priorLevelId?: string;
+    exercices: ExerciseDto[] = [];
   }
