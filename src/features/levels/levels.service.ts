@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { CreateLevelDto, UpdateLevelDto } from '../../core/entities/DTO/levels';
 
 import { Level } from '../../core/entities/models';
 
@@ -11,30 +12,25 @@ export class LevelsService {
     private levelsRepository: Repository<Level>,
   ) {}
 
+  public create(createLevelDto: CreateLevelDto): Level {
+    return this.levelsRepository.create()
+  }
+  public findOne(levelId: string): Promise<Level> {
+    return this.levelsRepository.findOne(levelId);
+  }
+
   public findAll(): Promise<Level[]> {
     return this.levelsRepository.find({ relations: ['exercices'] });
   }
 
-  public async findOne(id: number): Promise<Level> {
-    return this.levelsRepository.findOneOrFail({
-      where: { levelId: id },
-      relations: ['exercices'],
-    });
+  public update(
+    levelId: string,
+    levelUpdateDto: UpdateLevelDto,
+  ): Promise<Level> {
+    throw new Error('Method not implemented.');
   }
 
-  public async findMany(levelIds: number[]): Promise<Level[]> {
-    return this.levelsRepository.find({ where: { levelId: In(levelIds) } });
+  public remove(levelId: string): boolean {
+    throw new Error('Method not implemented.');
   }
-
-  // public async getNextLevel(ID: number): Promise<number> {
-  //   return (
-  //     await this.levelsRepository.findOneOrFail({ where: { levelId: ID } })
-  //   ).nextLevelId;
-  // }
-
-  // public async getPrevLevel(ID: number): Promise<number> {
-  //   return (
-  //     await this.levelsRepository.findOneOrFail({ where: { nextLevelIdr: ID } })
-  //   ).levelId;
-  // }
 }

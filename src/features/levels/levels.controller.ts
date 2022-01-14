@@ -1,4 +1,13 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { CreateLevelDto } from '../../core/entities/DTO/levels';
 
 import { Level } from '../../core/entities/models';
 import { LevelsService } from './levels.service';
@@ -7,20 +16,31 @@ import { LevelsService } from './levels.service';
 export class LevelsController {
   constructor(private levelsService: LevelsService) {}
 
+  @Post()
+  public async create(@Body() createUserDto: CreateLevelDto): Promise<Level> {
+    return this.levelsService.create(createUserDto);
+  }
+
   @Get()
-  GetAll(): Promise<Level[]> {
+  public async findAll(): Promise<Level[]> {
     return this.levelsService.findAll();
   }
 
   @Get(':id')
-  GetOne(@Param() params: { id: number }): Promise<Level> {
-    return this.levelsService.findOne(params.id);
+  public async findOne(@Param('id') id: string): Promise<Level> {
+    return this.levelsService.findOne(id);
   }
 
-  // @Get(':id/groups')
-  // @UseGuards(JwtAuthGuard)
-  // GetGroups(@UserDeco() user: User, @Param() params: { id: number }): Promise<Group[]> {
-  //     console.log(user);
-  //     return this.groupService.getGroupsByLevel(user.userId, params.id);
-  // }
+  @Patch(':id')
+  public async update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<Level> {
+    return this.levelsService.update(id, updateUserDto);
+  }
+
+  @Delete(':id')
+  public async remove(@Param('id') id: string): Promise<boolean> {
+    return this.levelsService.remove(id);
+  }
 }
