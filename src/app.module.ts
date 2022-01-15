@@ -1,20 +1,24 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 
 import { AppService } from './app.service';
 import { Asset, Exercise, Level, Mouvement } from '@core/data/models';
-import { LevelsModule } from './features/levels/levels.module';
-import { MapperModule } from './core/mapper/mapper.module';
+import { MapperModule } from '@core/mapper/mapper.module';
+import { LevelsModule } from '@features/levels/levels.module';
+
+
+const ENVIRONEMENT = JSON.parse(process.env.NEST_CONFIG)
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      cache: true,
+      envFilePath: `${process.env.NEST_ENV}.env`,
+    }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: '192.168.0.15',
-      port: 3306,
-      username: 'user',
-      password: 'passw0rd',
-      database: 'skiv3',
+      ...ENVIRONEMENT.db_config,
       entities: [Level, Exercise, Asset, Mouvement],
       synchronize: true,
     }),
@@ -23,4 +27,8 @@ import { MapperModule } from './core/mapper/mapper.module';
   ],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    console.log(process.env.NEST_ENV)
+  }
+}

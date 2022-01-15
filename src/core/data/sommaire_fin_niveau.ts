@@ -22,5 +22,5 @@ export class Sommairefinniveau {
     () => Sommaireexercice,
     (sommaireexercice) => sommaireexercice.sommaire
   )
-  sommaireexercices: Sommaireexercice[];
+  sommaireexercises: Sommaireexercice[];
 }

@@ -3,24 +3,24 @@ import { CreateExerciceDto } from './dto/create-exercice.dto';
 import { UpdateExerciceDto } from './dto/update-exercice.dto';
 
 @Injectable()
-export class ExerciceService {
+export class exerciseservice {
   create(createExerciceDto: CreateExerciceDto) {
     return 'This action adds a new exercice';
   }
 
-  findAll() {
+  public findAll() {
     return `This action returns all exercice`;
   }
 
-  findOne(id: number) {
+  public findOne(id: number) {
     return `This action returns a #${id} exercice`;
   }
 
-  update(id: number, updateExerciceDto: UpdateExerciceDto) {
+  public update(id: number, updateExerciceDto: UpdateExerciceDto) {
     return `This action updates a #${id} exercice`;
   }
 
-  remove(id: number) {
+  public remove(id: number) {
     return `This action removes a #${id} exercice`;
   }
 }

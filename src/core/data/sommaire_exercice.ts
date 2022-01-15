@@ -15,7 +15,7 @@ export class Sommaireexercice {
 
   @ManyToOne(
     () => Sommairefinniveau,
-    (sommairefinniveau) => sommairefinniveau.sommaireexercices,
+    (sommairefinniveau) => sommairefinniveau.sommaireexercises,
     { onDelete: "RESTRICT", onUpdate: "RESTRICT" }
   )
   @JoinColumn([{ name: "SommaireID", referencedColumnName: "sommaireId" }])

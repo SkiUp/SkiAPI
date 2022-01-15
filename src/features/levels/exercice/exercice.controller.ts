@@ -1,34 +1,45 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ExerciceService } from './exercice.service';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
+import { exerciseservice } from './exercice.service';
 import { CreateExerciceDto } from './dto/create-exercice.dto';
 import { UpdateExerciceDto } from './dto/update-exercice.dto';
 
 @Controller('exercice')
 export class ExerciceController {
-  constructor(private readonly exerciceService: ExerciceService) {}
+  constructor(private readonly exerciseService: exerciseservice) {}
 
   @Post()
-  create(@Body() createExerciceDto: CreateExerciceDto) {
-    return this.exerciceService.create(createExerciceDto);
+  public create(@Body() createExerciceDto: CreateExerciceDto) {
+    return this.exerciseService.create(createExerciceDto);
   }
 
   @Get()
-  findAll() {
-    return this.exerciceService.findAll();
+  public findAll() {
+    return this.exerciseService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.exerciceService.findOne(+id);
+  public findOne(@Param('id') id: string) {
+    return this.exerciseService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateExerciceDto: UpdateExerciceDto) {
-    return this.exerciceService.update(+id, updateExerciceDto);
+  public update(
+    @Param('id') id: string,
+    @Body() updateExerciceDto: UpdateExerciceDto,
+  ) {
+    return this.exerciseService.update(+id, updateExerciceDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.exerciceService.remove(+id);
+  public remove(@Param('id') id: string) {
+    return this.exerciseService.remove(+id);
   }
 }

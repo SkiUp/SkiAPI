@@ -20,7 +20,7 @@ export class LevelsService {
   }
 
   public findAll(): Promise<Level[]> {
-    return this.levelsRepository.find({ relations: ['exercices'] });
+    return this.levelsRepository.find({ relations: ['exercises'] });
   }
 
   public update(
