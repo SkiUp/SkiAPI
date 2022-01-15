@@ -16,7 +16,7 @@ import { Mapper } from '@automapper/core';
 import {
   LevelCreateDto,
   LevelDto,
-  LevelUpdateDto,
+  LevelUpsertDto,
 } from '@core/data/DTO/levels';
 
 import { Level } from '@core/data/models';
@@ -94,7 +94,7 @@ export class LevelsController {
   })
   public async update(
     @Param('id') id: string,
-    @Body() updateExerciceDto: LevelUpdateDto,
+    @Body() updateExerciceDto: LevelUpsertDto,
   ) {
     return this.levelsService.update(id, updateExerciceDto);
   }
