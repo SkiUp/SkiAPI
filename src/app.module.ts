@@ -6,19 +6,19 @@ import { AppService } from './app.service';
 import { Asset, Exercise, Level, Mouvement } from '@core/data/models';
 import { MapperModule } from '@core/mapper/mapper.module';
 import { LevelsModule } from '@features/levels/levels.module';
+import { Config } from '@core/models/config';
 
-
-const ENVIRONEMENT = JSON.parse(process.env.NEST_CONFIG)
+const ENVIRONEMENT: Config = JSON.parse(process.env.NEST_CONFIG);
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
-      envFilePath: `${process.env.NEST_ENV}.env`,
+      envFilePath: `nest.env`,
     }),
     TypeOrmModule.forRoot({
-      ...ENVIRONEMENT.db_config,
+      ...ENVIRONEMENT.dbConfig,
       entities: [Level, Exercise, Asset, Mouvement],
       synchronize: true,
     }),
@@ -29,6 +29,6 @@ const ENVIRONEMENT = JSON.parse(process.env.NEST_CONFIG)
 })
 export class AppModule {
   constructor() {
-    console.log(process.env.NEST_ENV)
+    console.log(process.env.NEST_ENV);
   }
 }

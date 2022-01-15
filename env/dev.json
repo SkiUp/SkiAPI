@@ -1,5 +1,5 @@
 {
-  "db_config": {
+  "dbConfig": {
     "type": "mysql",
     "host": "192.168.0.15",
     "port": "3306",
