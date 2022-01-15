@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Controller, Get, Param, Query, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
-import { ExtractJwt } from 'passport-jwt';
-import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
-import { UserDeco } from '../../core/deocrators/user.decorator';
-import { User } from '../../core/entities';
-import { Student } from '../../core/entities/student';
+
+// TODO
+import { JwtAuthGuard } from '@core/../auth/jwt-auth.guard';
+import { UserDeco } from '@core/deocrators/user.decorator';
+import { User } from '@core/data';
+import { Student } from '@core/data/student';
 
 import { StudentsService } from './students.service';
 
@@ -18,7 +19,11 @@ export class StudentsController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  Get(@UserDeco() user: User, @Req() req: Request, @Query() query: any): Student[] {
+  Get(
+    @UserDeco() user: User,
+    @Req() req: Request,
+    @Query() query: any,
+  ): Student[] {
     const test = [
       { a: 1 },
       { a: 'b' },
@@ -37,8 +42,6 @@ export class StudentsController {
   get(@UserDeco() user: User, @Param() params: { id: number }): boolean {
     console.log(user);
     console.log(params.id);
-
-    const test = ExtractJwt.fromAuthHeaderAsBearerToken();
 
     return true;
   }

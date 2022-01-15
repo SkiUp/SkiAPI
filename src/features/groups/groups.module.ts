@@ -3,15 +3,15 @@ import { Module } from '@nestjs/common';
 
 import { GroupController } from './group.controller';
 import { GroupService } from './group.service';
-import { User, Departement } from '../../core/entities';
-import { Group } from '../../core/entities/group';
-import { Level } from '../../core/entities/models';
+import { User, Departement } from '@core/data';
+import { Group } from '@core/data/group';
+import { Level } from '@core/data/models';
 import {
   Departementstaff,
   Departementpermissionrole,
   Departementpermission,
-} from '../../core/entities/models/permissions';
-import { Studentgroup } from '../../core/entities/student_group';
+} from '@core/data/models/permissions';
+import { Studentgroup } from '@core/data/student_group';
 import { DepartementService } from '../departement/departement.service';
 import { LevelsService } from '../levels/levels.service';
 import { PermissionsModule } from '../permissions/permissions.module';

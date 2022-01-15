@@ -2,8 +2,8 @@
 import { Controller, Get, UseGuards, Param, Req, Query } from '@nestjs/common';
 import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 import { UserDeco } from '../../core/deocrators/user.decorator';
-import { User } from '../../core/entities';
-import { Group } from '../../core/entities/group';
+import { User } from '@core/data';
+import { Group } from '@core/data/group';
 import { GroupService } from './group.service';
 
 @Controller('groups')

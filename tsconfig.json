@@ -8,18 +8,20 @@
     "allowSyntheticDefaultImports": true,
     "target": "es2017",
     "sourceMap": true,
+    "baseUrl": "./",
     "outDir": "./dist",
     "preserveSymlinks": true,
     "strict": true,
     "incremental": true,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "paths": {
+      "@features/*": ["src/features/*"],
+      "@levels/*": ["src/features/levels/*"],
+      "@core/*": ["src/core/*"],
+      "@entities/*": ["src/core/entities/*"]
+    }
   },
   "baseUrl": "./src",
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.spec.ts"],
-  "paths": {
-    "@groups/*": ["src/groups/*"],
-    "@core/*": ["src/core/*"],
-    "@entities/*": ["src/core/entities/*"]
-  }
+  "exclude": ["node_modules", "dist", "**/*.spec.ts"]
 }

@@ -7,9 +7,9 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { CreateLevelDto } from '../../core/entities/DTO/levels';
+import { LevelCreateDto, LevelUpdateDto } from '@core/data/DTO/levels';
 
-import { Level } from '../../core/entities/models';
+import { Level } from '@core/data/models';
 import { LevelsService } from './levels.service';
 
 @Controller('levels')
@@ -17,7 +17,7 @@ export class LevelsController {
   constructor(private levelsService: LevelsService) {}
 
   @Post()
-  public async create(@Body() createUserDto: CreateLevelDto): Promise<Level> {
+  public async create(@Body() createUserDto: LevelCreateDto): Promise<Level> {
     return this.levelsService.create(createUserDto);
   }
 
@@ -34,7 +34,7 @@ export class LevelsController {
   @Patch(':id')
   public async update(
     @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
+    @Body() updateUserDto: LevelUpdateDto,
   ): Promise<Level> {
     return this.levelsService.update(id, updateUserDto);
   }

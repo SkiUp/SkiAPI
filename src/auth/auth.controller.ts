@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 
 import { UserDeco } from '../core/deocrators/user.decorator';
-import { User } from '../core/entities/user';
-import { UserDto } from '../core/entities/DTO/auth';
+import { User } from '@core/data/user';
+import { UserDto } from '@core/data/DTO/auth';
 
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { AuthService } from './auth.service';

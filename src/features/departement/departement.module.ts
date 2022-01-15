@@ -8,10 +8,10 @@ import {
   Departementpermissionrole,
   Departementrole,
   Departementstaff,
-} from '../../core/entities/models/permissions';
-import { User, Departement } from '../../core/entities';
-import { Group } from '../../core/entities/group';
-import { Level } from '../../core/entities/models';
+} from '@core/data/models/permissions';
+import { User, Departement } from '@core/data';
+import { Group } from '@core/data/group';
+import { Level } from '@core/data/models';
 
 @Module({
   imports: [

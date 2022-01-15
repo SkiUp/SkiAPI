@@ -6,7 +6,7 @@ import {
   Departementstaff,
   Departementpermissionrole,
   Departementpermission,
-} from '../../core/entities/models/permissions';
+} from '@core/data/models/permissions';
 
 @Injectable()
 export class PermissionsService {

@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { User } from '../../core/entities';
-import { Level } from '../../core/entities/models';
 import {
   Departementstaff,
   Departementpermissionrole,
   Departementpermission,
-} from '../../core/entities/models/permissions';
+  Level,
+  User,
+} from '@core/data';
 import { PermissionsService } from './permissions.service';
 
 @Module({

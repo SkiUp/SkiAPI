@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateLevelDto, UpdateLevelDto } from '../../core/entities/DTO/levels';
+import { LevelCreateDto, LevelUpdateDto } from '@core/data/DTO/levels';
 
-import { Level } from '../../core/entities/models';
+import { Level } from '@core/data/models';
 
 @Injectable()
 export class LevelsService {
@@ -12,8 +12,8 @@ export class LevelsService {
     private levelsRepository: Repository<Level>,
   ) {}
 
-  public create(createLevelDto: CreateLevelDto): Level {
-    return this.levelsRepository.create()
+  public create(createLevelDto: LevelCreateDto): Level {
+    return this.levelsRepository.create();
   }
   public findOne(levelId: string): Promise<Level> {
     return this.levelsRepository.findOne(levelId);
@@ -25,7 +25,7 @@ export class LevelsService {
 
   public update(
     levelId: string,
-    levelUpdateDto: UpdateLevelDto,
+    levelUpdateDto: LevelUpdateDto,
   ): Promise<Level> {
     throw new Error('Method not implemented.');
   }
