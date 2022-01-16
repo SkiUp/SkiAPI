@@ -1,8 +1,10 @@
-import { Level } from '@core/data/models';
-import { LevelUpsertDto, LevelDto } from '../DTO/levels';
 import { EntityRepository, Repository } from 'typeorm';
 import { InjectMapper } from '@automapper/nestjs';
 import { Mapper } from '@automapper/core';
+
+import { Level } from '@core/data/models';
+import { QueryBuilder } from '@core/querybuilder';
+import { LevelUpsertDto, LevelDto, LevelsQueryDto } from '../DTO/levels';
 
 @EntityRepository(Level)
 export class LevelRepository extends Repository<Level> {
@@ -10,10 +12,10 @@ export class LevelRepository extends Repository<Level> {
     super();
   }
 
-  public async createLevel(levelUpsertDto: LevelUpsertDto): Promise<LevelDto> {
+  public createLevel(levelUpsertDto: LevelUpsertDto): Promise<Level> {
     let level: Level = this._mapper.map(levelUpsertDto, Level, LevelUpsertDto);
-    var createdLevel = await this.save(level);
-    return this._mapper.map(createdLevel, LevelDto, Level);
+    // TODO this is undefined ???
+    return this.save<Level>(level);
   }
 
   public async getLevelById(id: string): Promise<LevelDto> {
@@ -21,9 +23,8 @@ export class LevelRepository extends Repository<Level> {
     return this._mapper.map(level, LevelDto, Level);
   }
 
-  public async getLevels(): Promise<LevelDto[]> {
-    let levels = await this.find();
-    return this._mapper.mapArray(levels, LevelDto, Level);
+  public getLevels(query: LevelsQueryDto): Promise<Level[]> {
+    return QueryBuilder<Level>(query);
   }
 
   public async getLevelByPages(

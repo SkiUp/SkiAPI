@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { GenericQuery } from '@core/querybuilder/interfaces/generic-query';
 import { QueryFilters } from '@core/querybuilder';
+import { queryParamFixer } from '@shared/utils/query-param-fixer';
 
 export class LevelsQueryDto implements GenericQuery {
   className = 'level';
@@ -8,8 +9,9 @@ export class LevelsQueryDto implements GenericQuery {
   @ApiProperty()
   filters: QueryFilters<unknown>[];
 
-  constructor(query: LevelsQueryDto) {
+  constructor(queryIn?: unknown) {
     this.className = 'level';
+    const query: LevelsQueryDto = queryParamFixer(queryIn);
     this.filters = query.filters;
   }
 }

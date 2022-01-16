@@ -9,24 +9,25 @@ export function QueryBuilder<TEntity>(query: GenericQuery): Promise<TEntity[]> {
     .createQueryBuilder(query.className)
     .where('1 < 5');
 
-  for (const filter of query.filters) {
-    let isValidValue = true;
-    if (filter.filterType === 'property') {
-      isValidValue = !!filter.value;
-    } else if (filter.filterType === 'array') {
-      isValidValue =
-        filter?.value?.filter((item: unknown) => !!item).length > 0;
-    } else if (filter.filterType === 'object') {
-      isValidValue = filter.value && Object.keys(filter.value).length > 0;
-    }
+  if (query.filters){
+    for (const filter of query.filters) {
+      let isValidValue = true;
+      if (filter.filterType === 'property') {
+        isValidValue = !!filter.value;
+      } else if (filter.filterType === 'array') {
+        isValidValue =
+          filter?.value?.filter((item: unknown) => !!item).length > 0;
+      } else if (filter.filterType === 'object') {
+        isValidValue = filter.value && Object.keys(filter.value).length > 0;
+      }
 
-    if (!isValidValue) {
-      // throw new Error('Query property is not defined');
-      console.error('Query property is not defined');
-    } else {
-      builder = toSqlOperation(builder, filter);
-    }
-  }
+      if (!isValidValue) {
+        // throw new Error('Query property is not defined');
+        console.error('Query property is not defined');
+      } else {
+        builder = toSqlOperation(builder, filter);
+      }
+    }}
   return builder.getMany();
 }
 

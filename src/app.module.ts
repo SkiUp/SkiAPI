@@ -14,13 +14,13 @@ import { LevelsModule } from '@features/levels/levels.module';
       cache: true,
       envFilePath: `nest.env`,
     }),
+    MapperModule,
     TypeOrmModule.forRoot({
       ...JSON.parse(process.env.NEST_CONFIG).dbConfig,
       entities: [Level, Exercise, Asset, Mouvement],
       synchronize: true,
     }),
     LevelsModule,
-    MapperModule,
   ],
   providers: [AppService],
 })

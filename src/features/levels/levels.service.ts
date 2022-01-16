@@ -1,28 +1,37 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { LevelsQueryDto, LevelUpsertDto } from '@core/data/DTO/levels';
 
 import { Level } from '@core/data/models';
-import { QueryBuilder } from '@core/querybuilder';
+import { LevelRepository } from '@core/data';
+import { sortLevels } from '@shared/utils';
 
 @Injectable()
 export class LevelsService {
-  constructor(
-    @InjectRepository(Level)
-    private levelsRepository: Repository<Level>,
-  ) {}
+  constructor(private levelsRepository: LevelRepository) {}
 
-  public create(createLevelDto: LevelUpsertDto): Level {
-    return this.levelsRepository.create();
+  public async create(createLevelDto: LevelUpsertDto): Promise<Level> {
+    return this.levelsRepository.createLevel(createLevelDto);
+    // const level = await getConnection()
+    //   .createQueryBuilder()
+    //   .insert()
+    //   .into(Level)
+    //   .values([createLevelDto])
+    //   .execute();
+    // const levels = await this.levelsRepository.find({
+    //   where: { id: In(level.identifiers.map((id) => id.id)) },
+    // });
+    // return levels[0];
   }
+
   public findOne(levelId: string): Promise<Level> {
     return this.levelsRepository.findOne(levelId);
   }
 
   public async findAll(query: LevelsQueryDto): Promise<Level[]> {
-    const levels = await QueryBuilder<Level>(query);
-    return levels;
+    const levels = await this.levelsRepository.getLevels(query);
+    const output = sortLevels(levels);
+    console.log(output);
+    return output;
   }
 
   public update(

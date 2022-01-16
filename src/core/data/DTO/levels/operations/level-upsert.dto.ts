@@ -1,13 +1,20 @@
-import { IsNotWhitespace, IsValidUuid } from '@core/validations/string-validations';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, MaxLength, MinLength } from 'class-validator';
-export class LevelUpsertDto {
+import {
+  IsArray,
+  IsNotEmpty,
+  IsOptional,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
+import { IsNotWhitespace, IsValidUuid } from '@shared/validators';
+import { Exercise } from '@core/data/models/levels';
+export class LevelUpsertDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNotWhitespace()
   @MinLength(4)
-  @MaxLength(254)  
+  @MaxLength(254)
   name: string;
 
   @ApiProperty()
@@ -17,4 +24,9 @@ export class LevelUpsertDto {
   @ApiProperty()
   @IsValidUuid()
   priorLevelId?: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsArray()
+  exercises?: Exercise[];
 }

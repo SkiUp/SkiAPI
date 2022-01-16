@@ -18,7 +18,8 @@
       "@features/*": ["src/features/*"],
       "@levels/*": ["src/features/levels/*"],
       "@core/*": ["src/core/*"],
-      "@entities/*": ["src/core/entities/*"]
+      "@entities/*": ["src/core/entities/*"],
+      "@shared/*": ["src/shared/*"]
     }
   },
   "baseUrl": "./src",

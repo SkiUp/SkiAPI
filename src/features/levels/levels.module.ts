@@ -8,15 +8,23 @@ import { LevelsController } from './levels.controller';
 import { MouvementsModule } from './mouvements/mouvements.module';
 import { ExerciceModule } from './exercice/exercice.module';
 import { MapperModule } from '@core/mapper/mapper.module';
+import { LevelRepository } from '@core/data';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Level, Exercise, Mouvement, Asset]),
-    MouvementsModule,
     MapperModule,
+    TypeOrmModule.forFeature([
+      Level,
+      Exercise,
+      Mouvement,
+      Asset,
+      LevelRepository,
+    ]),
+    MouvementsModule,
     ExerciceModule,
   ],
   providers: [LevelsService],
   controllers: [LevelsController],
+  exports: [TypeOrmModule],
 })
 export class LevelsModule {}

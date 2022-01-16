@@ -5,10 +5,9 @@ import { LevelProfile } from './profiles/level-profile';
 
 @Module({
   providers: [LevelProfile],
-  exports: [],
   imports: [
     AutomapperModule.forRoot({
-      options: [{ name: 'level', pluginInitializer: classes }],
+      options: [{ name: 'classMapper', pluginInitializer: classes }],
       singular: true,
     }),
   ],

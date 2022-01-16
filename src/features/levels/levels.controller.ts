@@ -43,8 +43,10 @@ export class LevelsController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Unauthorised.',
   })
-  public create(@Body() createExerciceDto: LevelUpsertDto): LevelDto {
-    const level = this.levelsService.create(createExerciceDto);
+  public async create(
+    @Body() createExerciceDto: LevelUpsertDto,
+  ): Promise<LevelDto> {
+    const level = await this.levelsService.create(createExerciceDto);
     return this._mapper.map(level, LevelDto, Level);
   }
 
@@ -60,19 +62,14 @@ export class LevelsController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Unauthorised.',
   })
-  public async findAll(@Query() query: { query: string }): Promise<LevelDto[]> {
-    // TODO make this nicer
-    const levels = await this.levelsService.findAll(
-      new LevelsQueryDto(JSON.parse(query.query)),
-    );
-    console.log(levels);
+  public async findAll(@Query() query: unknown): Promise<LevelDto[]> {
+    const levels = await this.levelsService.findAll(new LevelsQueryDto(query));
     const output = this._mapper.mapArray(levels, LevelDto, Level);
-    console.log(output);
     return output;
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Create a Level' })
+  @ApiOperation({ summary: "Get a Level by it's id" })
   @ApiResponse({
     status: 200,
     description: 'The created Level',
@@ -88,7 +85,7 @@ export class LevelsController {
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'Create a Level' })
+  @ApiOperation({ summary: 'Update a Level' })
   @ApiResponse({
     status: 200,
     description: ' Updated Level',
