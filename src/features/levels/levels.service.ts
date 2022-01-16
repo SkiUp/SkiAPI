@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { LevelUpsertDto } from '@core/data/DTO/levels';
+import { LevelsQueryDto, LevelUpsertDto } from '@core/data/DTO/levels';
 
 import { Level } from '@core/data/models';
+import { QueryBuilder } from '@core/querybuilder';
 
 @Injectable()
 export class LevelsService {
@@ -19,8 +20,9 @@ export class LevelsService {
     return this.levelsRepository.findOne(levelId);
   }
 
-  public findAll(): Promise<Level[]> {
-    return this.levelsRepository.find({ relations: ['exercises'] });
+  public async findAll(query: LevelsQueryDto): Promise<Level[]> {
+    const levels = await QueryBuilder<Level>(query);
+    return levels;
   }
 
   public update(

@@ -7,11 +7,13 @@ import { LevelsService } from './levels.service';
 import { LevelsController } from './levels.controller';
 import { MouvementsModule } from './mouvements/mouvements.module';
 import { ExerciceModule } from './exercice/exercice.module';
+import { MapperModule } from '@core/mapper/mapper.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Level, Exercise, Mouvement, Asset]),
     MouvementsModule,
+    MapperModule,
     ExerciceModule,
   ],
   providers: [LevelsService],

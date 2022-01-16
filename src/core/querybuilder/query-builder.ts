@@ -1,19 +1,33 @@
-import { getConnection, SelectQueryBuilder } from 'typeorm';
+import { getRepository, SelectQueryBuilder } from 'typeorm';
+
 import { QueryOperators } from './enums';
+import { GenericQuery } from './interfaces/generic-query';
 import { QueryFilters } from './interfaces/query-filters';
-import { GlobalQueries } from './query-instances';
 
-export async function QueryBuilder<TEntity>(query: GlobalQueries) {
-  let builder: SelectQueryBuilder<TEntity> = getConnection()
-    .createQueryBuilder()
-    .select(query.className)
-    .where('true');
+export function QueryBuilder<TEntity>(query: GenericQuery): Promise<TEntity[]> {
+  let builder = getRepository<TEntity>(query.className)
+    .createQueryBuilder(query.className)
+    .where('1 < 5');
 
-  for (const [propName, propValue] of Object.entries(query)) {
-    if (propName !== 'className') {
-      builder = toSqlOperation(builder, propValue);
+  for (const filter of query.filters) {
+    let isValidValue = true;
+    if (filter.filterType === 'property') {
+      isValidValue = !!filter.value;
+    } else if (filter.filterType === 'array') {
+      isValidValue =
+        filter?.value?.filter((item: unknown) => !!item).length > 0;
+    } else if (filter.filterType === 'object') {
+      isValidValue = filter.value && Object.keys(filter.value).length > 0;
+    }
+
+    if (!isValidValue) {
+      // throw new Error('Query property is not defined');
+      console.error('Query property is not defined');
+    } else {
+      builder = toSqlOperation(builder, filter);
     }
   }
+  return builder.getMany();
 }
 
 function toSqlOperation<T>(
@@ -34,50 +48,42 @@ function toSqlOperation<T>(
   }
 
   // TODO CHECK IF NUMERAL OPERATIONS ARE GIVEN NUMBERS AND NOT STRINGS
-  const whereString = `${query.propertyName} ${query.queryOperator} ${wrapValue(
-    query.propertyName,
-    query.queryOperator,
-  )}`;
+  const whereString = `${query.propertyName} ${query.queryOperator} :${query.propertyName}`;
   if (
     query.filterType === 'array' &&
-    query.queryOperator !== QueryOperators.IN &&
-    query.queryOperator !== QueryOperators.NOT_IN
+    !(
+      query.queryOperator === QueryOperators.IN ||
+      query.queryOperator === QueryOperators.NOT_IN
+    )
   ) {
     for (const item of query.value) {
       builder = builder.andWhere(whereString, {
-        [query.propertyName]: item,
+        [query.propertyName]: wrapValue(item, query.queryOperator),
       });
     }
+    return builder;
   } else if (query.filterType === 'property') {
     return builder.andWhere(whereString, {
-      [query.propertyName]: query.value,
+      [query.propertyName]: wrapValue(query.value, query.queryOperator),
     });
   }
 }
 
-function wrapValue(value: string, queryOperator: QueryOperators) {
+function wrapValue(value: unknown, queryOperator: QueryOperators) {
   switch (queryOperator) {
     case QueryOperators.IN:
-      return `(:${value})`;
     case QueryOperators.NOT_IN:
-      return `(:${value})`;
+      return `(${value})`;
     case QueryOperators.LIKE:
-      return `'%:${value}%'`;
     case QueryOperators.NOT_LIKE:
-      return `'%:${value}%'`;
+      return `%${value}%`;
     case QueryOperators.NOT_EQUAL:
-      return `:${value}`;
     case QueryOperators.EQUAL:
-      return `:${value}`;
     case QueryOperators.GREATER_THAN:
-      return `:${value}`;
     case QueryOperators.GREATER_THAN_OR_EQUAL:
-      return `:${value}`;
     case QueryOperators.LESS_THAN:
-      return `:${value}`;
     case QueryOperators.LESS_THAN_OR_EQUAL:
-      return `:${value}`;
     default:
-      return `:${value}`;
+      return value;
   }
 }

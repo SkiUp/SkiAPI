@@ -23,8 +23,6 @@ export class PermissionsService {
     const user = await this.StaffRepo.findOne({
       where: { userId: userID, roleId: 1 },
     });
-    console.log(user == null);
-
     return user != null;
   }
 

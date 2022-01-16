@@ -9,5 +9,4 @@ export enum QueryOperators {
   NOT_IN = 'NOT IN',
   LIKE = 'LIKE',
   NOT_LIKE = 'NOT LIKE',
-
 }

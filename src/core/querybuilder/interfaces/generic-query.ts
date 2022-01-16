@@ -1,4 +1,6 @@
-export interface GenericQuery<TEntity> {
-  className: string;
-}
+import { QueryFilters } from './query-filters';
 
+export interface GenericQuery {
+  className: string;
+  filters: QueryFilters<unknown>[];
+}

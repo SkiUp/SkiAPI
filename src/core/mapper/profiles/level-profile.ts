@@ -15,47 +15,48 @@ export class LevelProfile extends AutomapperProfile {
       mapper
         .createMap(Level, LevelDto)
         .forMember(
-          dst => dst.id,
-          mapFrom(src => src.id),
+          (dst) => dst.id,
+          mapFrom((src) => src.id),
         )
         .forMember(
-          dst => dst.name,
-          mapFrom(src => src.name),
+          (dst) => dst.name,
+          mapFrom((src) => src.name),
         )
         .forMember(
-          dst => dst.description,
-          mapFrom(src => src.description),
+          (dst) => dst.description,
+          mapFrom((src) => src.description),
         )
         .forMember(
-          dst => dst.priorLevelId,
-          mapFrom(src => src.priorLevelId),
+          (dst) => dst.priorLevelId,
+          mapFrom((src) => src.priorLevelId),
         )
         .forMember(
-          dst => dst.exercises,
-          mapWith(ExerciseDto, Exercise, src => src.exercises),
+          (dst) => dst.exercises,
+          mapWith(ExerciseDto, Exercise, (src) => src.exercises),
         );
 
       mapper
         .createMap(LevelDto, Level)
         .forMember(
-          dst => dst.id,
-          mapFrom(src => src.id),
+          (dst) => dst.id,
+          mapFrom((src) => src.id),
         )
         .forMember(
-          dst => dst.name,
-          mapFrom(src => src.name),
+          (dst) => dst.name,
+          mapFrom((src) => src.name),
         )
         .forMember(
-          dst => dst.description,
-          mapFrom(src => src.description),
+          (dst) => dst.description,
+          mapFrom((src) => src.description),
         )
         .forMember(
-          dst => dst.priorLevelId,
-          mapFrom(src => src.priorLevelId),
-        ) .forMember(
-            dst => dst.exercises,
-            mapWith(Exercise, ExerciseDto, src => src.exercises),
-          );
+          (dst) => dst.priorLevelId,
+          mapFrom((src) => src.priorLevelId),
+        )
+        .forMember(
+          (dst) => dst.exercises,
+          mapWith(Exercise, ExerciseDto, (src) => src.exercises),
+        );
     };
   }
 }

@@ -1,14 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Level } from '@core/data/models';
 import { GenericQuery } from '@core/querybuilder/interfaces/generic-query';
-import { QueryArrayFilter } from '@core/querybuilder/interfaces/query-filters';
+import { QueryFilters } from '@core/querybuilder';
 
-export class LevelsQueryDto implements GenericQuery<Level> {
+export class LevelsQueryDto implements GenericQuery {
   className = 'level';
 
   @ApiProperty()
-  levelIds: QueryArrayFilter<string>;
+  filters: QueryFilters<unknown>[];
 
-  @ApiProperty()
-  priorLevelIds?: string[];
+  constructor(query: LevelsQueryDto) {
+    this.className = 'level';
+    this.filters = query.filters;
+  }
 }

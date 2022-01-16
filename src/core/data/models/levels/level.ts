@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Exercise as Exercise } from './exercice';
+import { Exercise } from './exercice';
 
 @Entity()
 export class Level {
@@ -15,9 +15,6 @@ export class Level {
   @Column()
   priorLevelId?: string;
 
-  @OneToMany(
-    () => Exercise,
-    exercice => exercice.level,
-  )
+  @OneToMany(() => Exercise, (exercice) => exercice.level)
   exercises: Exercise[];
 }

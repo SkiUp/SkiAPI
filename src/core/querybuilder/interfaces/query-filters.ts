@@ -1,27 +1,41 @@
-import { Level } from '@core/data';
+import { ApiProperty } from '@nestjs/swagger';
 import { QueryOperators } from '../enums';
-import { GenericQuery } from './generic-query';
 
-interface QueryFilter {
-  filterType: 'array' | 'property' | 'object';
-  propertyName: string;
-  queryOperator: QueryOperators;
+export class QueryFilter {
+  @ApiProperty()
+  public filterType: 'array' | 'property' | 'object';
+
+  @ApiProperty()
+  public propertyName: string;
 }
 
-export interface QueryPropertyFilter<T> extends QueryFilter {
-  filterType: 'property';
-  value: T;
+export class QueryPropertyFilter<T> extends QueryFilter {
+  @ApiProperty()
+  public filterType: 'property';
+
+  @ApiProperty()
+  public value: T;
+
+  @ApiProperty()
+  public queryOperator: QueryOperators;
 }
 
-export interface QueryArrayFilter<T> extends QueryFilter {
-  filterType: 'array';
-  value: T[];
+export class QueryArrayFilter<T> extends QueryFilter {
+  @ApiProperty()
+  public filterType: 'array';
+
+  @ApiProperty()
+  public value: T[];
+
+  @ApiProperty()
+  public queryOperator: QueryOperators;
 }
 
-export interface QueryObjectFilter<T>
-  extends Omit<QueryFilter, 'queryOperator'> {
-  filterType: 'object';
-  value: T;
+export abstract class QueryObjectFilter<T> {
+  @ApiProperty()
+  public filterType: 'object';
+  @ApiProperty()
+  public value: T;
 }
 
 export type QueryFilters<T> =

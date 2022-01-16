@@ -8,7 +8,7 @@ import { LevelProfile } from './profiles/level-profile';
   exports: [],
   imports: [
     AutomapperModule.forRoot({
-      options: [{ name: 'blah', pluginInitializer: classes }],
+      options: [{ name: 'level', pluginInitializer: classes }],
       singular: true,
     }),
   ],

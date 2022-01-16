@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -14,8 +15,8 @@ import { InjectMapper } from '@automapper/nestjs';
 import { Mapper } from '@automapper/core';
 
 import {
-  
   LevelDto,
+  LevelsQueryDto,
   LevelUpsertDto,
 } from '@core/data/DTO/levels';
 
@@ -59,9 +60,15 @@ export class LevelsController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Unauthorised.',
   })
-  public async findAll(): Promise<LevelDto[]> {
-    const levels = await this.levelsService.findAll();
-    return this._mapper.mapArray(levels, LevelDto, Level);
+  public async findAll(@Query() query: { query: string }): Promise<LevelDto[]> {
+    // TODO make this nicer
+    const levels = await this.levelsService.findAll(
+      new LevelsQueryDto(JSON.parse(query.query)),
+    );
+    console.log(levels);
+    const output = this._mapper.mapArray(levels, LevelDto, Level);
+    console.log(output);
+    return output;
   }
 
   @Get(':id')
