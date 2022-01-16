@@ -10,6 +10,7 @@ import {
 import { exerciseservice } from './exercice.service';
 import { CreateExerciceDto } from './dto/create-exercice.dto';
 import { UpdateExerciceDto } from './dto/update-exercice.dto';
+import { LevelsQueryDto } from '@core/data/DTO/levels';
 
 @Controller('exercice')
 export class ExerciceController {
@@ -26,7 +27,7 @@ export class ExerciceController {
   }
 
   @Get(':id')
-  public findOne(@Param('id') id: string) {
+  public findOne(@Param() id: LevelsQueryDto) {
     return this.exerciseService.findOne(+id);
   }
 

@@ -14,7 +14,7 @@ import { InjectMapper } from '@automapper/nestjs';
 import { Mapper } from '@automapper/core';
 
 import {
-  LevelCreateDto,
+  
   LevelDto,
   LevelUpsertDto,
 } from '@core/data/DTO/levels';
@@ -42,7 +42,7 @@ export class LevelsController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Unauthorised.',
   })
-  public create(@Body() createExerciceDto: LevelCreateDto): LevelDto {
+  public create(@Body() createExerciceDto: LevelUpsertDto): LevelDto {
     const level = this.levelsService.create(createExerciceDto);
     return this._mapper.map(level, LevelDto, Level);
   }

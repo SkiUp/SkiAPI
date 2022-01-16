@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { LevelCreateDto, LevelUpsertDto } from '@core/data/DTO/levels';
+import { LevelUpsertDto } from '@core/data/DTO/levels';
 
 import { Level } from '@core/data/models';
 
@@ -12,7 +12,7 @@ export class LevelsService {
     private levelsRepository: Repository<Level>,
   ) {}
 
-  public create(createLevelDto: LevelCreateDto): Level {
+  public create(createLevelDto: LevelUpsertDto): Level {
     return this.levelsRepository.create();
   }
   public findOne(levelId: string): Promise<Level> {

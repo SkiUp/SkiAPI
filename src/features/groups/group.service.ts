@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, MoreThanOrEqual, Repository } from 'typeorm';
+import { getConnection, In, Like, MoreThanOrEqual, Repository } from 'typeorm';
 import { Group } from '@core/data/group';
 import { LevelsService } from '../levels/levels.service';
 import { PermissionsService } from '../permissions/permissions.service';
@@ -22,6 +22,7 @@ export class GroupService {
   ): Promise<Group[]> {
     const perms = await this.permsService.getPerms(userID);
     let output: Group[] = [];
+
     const filter = {
       where: {
         groupId: query.groupId
@@ -43,14 +44,25 @@ export class GroupService {
       },
       relations: ['teacher', 'studentgroups', 'studentgroups.student'],
     };
+
+    const querryBuilder = getConnection()
+      .getRepository(Group)
+      .createQueryBuilder('group');
+
+    if (query.groupId) {
+      querryBuilder.where('group.groupId IN (:...groupId)', {
+        groupId: query.groupId?.split(','),
+      });
+    }
+
     if (await this.permsService.isAdmin(userID)) {
       output = await this.groupsRepository.find(filter);
     } else {
-      const perms1 = perms.filter(x => x.permissionId == 1);
-      const perms2 = perms.filter(x => x.permissionId == 2);
+      const perms1 = perms.filter((x) => x.permissionId == 1);
+      const perms2 = perms.filter((x) => x.permissionId == 2);
       if (perms2.length > 0) {
         //View Grp Dept
-        let depts = perms2.map(x => x.departementId);
+        let depts = perms2.map((x) => x.departementId);
         depts = query.departementId
           ? depts.concat(depts, query.departementId.split(','))
           : depts;
@@ -60,7 +72,7 @@ export class GroupService {
       }
       if (perms1.length > 0) {
         // View Grp Self
-        let depts = perms1.map(x => x.departementId);
+        let depts = perms1.map((x) => x.departementId);
         depts = query.departementId
           ? depts.concat(depts, query.departementId.split(','))
           : depts;
@@ -70,7 +82,7 @@ export class GroupService {
         this.addToList(output, await this.groupsRepository.find(filter));
       }
     }
-    return output.map(x => {
+    return output.map((x) => {
       delete x.teacher.password;
       includeStudents && delete x.studentgroups;
       return x;
@@ -84,7 +96,8 @@ export class GroupService {
    */
   addToList(lista: Group[], listb: Group[]): Group[] {
     for (const elementb of listb) {
-      if (!lista.find(x => x.groupId == elementb.groupId)) lista.push(elementb);
+      if (!lista.find((x) => x.groupId == elementb.groupId))
+        lista.push(elementb);
     }
     return lista;
   }
