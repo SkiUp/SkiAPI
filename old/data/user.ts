@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Group } from './group';
 import { Login } from './login';
-import { Departementstaff } from './models/permissions';
+import { Departementstaff } from './permissions';
 
 @Entity('User', { schema: 'ski' })
 export class User {

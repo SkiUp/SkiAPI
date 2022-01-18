@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '@core/data';
-import { Level } from '@core/data/models';
 import {
   Departementpermission,
   Departementpermissionrole,
@@ -14,7 +13,6 @@ import { UsersService } from './users.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      Level,
       User,
       Departementstaff,
       Departementpermissionrole,

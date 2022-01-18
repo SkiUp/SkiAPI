@@ -1,12 +1,11 @@
-import { User } from '../../user';
-import { DepartementStaffDto } from '../permissions/departement_staff.dto';
+import { User } from '../user';
 import { GroupDto } from '../school/group.dto';
 
 export class UserDto {
   userId: number;
   firstName: string;
   lastName: string;
-  departements?: DepartementStaffDto[];
+  // departements?: DepartementStaffDto[];
   groups?: GroupDto[];
 
   constructor(user: User) {

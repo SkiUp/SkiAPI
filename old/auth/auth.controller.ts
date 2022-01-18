@@ -9,7 +9,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 
-import { UserDeco } from '../core/deocrators/user.decorator';
+import { UserDeco } from '../deocrators/user.decorator';
 import { User } from '@core/data/user';
 import { UserDto } from '@core/data/DTO/auth';
 

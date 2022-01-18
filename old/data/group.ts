@@ -10,7 +10,6 @@ import {
 import { Departement } from './departement';
 import { User } from './user';
 import { Studentgroup } from './student_group';
-import { Level } from './models';
 
 @Index('IXFK_Groups_Levels_LevelID', ['levelId'], {})
 @Index('FK_Groups_Departement_DepartementID', ['departementId'], {})

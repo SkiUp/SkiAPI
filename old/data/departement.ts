@@ -5,10 +5,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Departementpermissionrole } from './models/permissions/departement_permission_role';
 import { Group } from './group';
-import { Departementstaff } from './models/permissions';
-import { Level } from './models/levels';
+import { Departementpermissionrole, Departementstaff } from './permissions';
 
 @Entity('Departement', { schema: 'ski' })
 export class Departement {
@@ -29,19 +27,16 @@ export class Departement {
 
   @OneToMany(
     () => Departementpermissionrole,
-    departementpermissionrole => departementpermissionrole.departement,
+    (departementpermissionrole) => departementpermissionrole.departement,
   )
   departementpermissionroles: Departementpermissionrole[];
 
   @OneToMany(
     () => Departementstaff,
-    departementstaff => departementstaff.departement,
+    (departementstaff) => departementstaff.departement,
   )
   departementstaffs: Departementstaff[];
 
-  @OneToMany(
-    () => Group,
-    group => group.departement,
-  )
+  @OneToMany(() => Group, (group) => group.departement)
   groups: Group[];
 }

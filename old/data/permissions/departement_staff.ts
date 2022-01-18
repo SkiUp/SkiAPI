@@ -1,6 +1,6 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
-import { Departement } from '../../departement';
-import { User } from '../../user';
+import { Departement } from '../departement';
+import { User } from '../user';
 import { Departementrole } from './departement_role';
 
 @Index('IXFK_DepartementStaff_DepartementID', ['departementId'], {})
