@@ -4,13 +4,19 @@ import { LevelsQueryDto, LevelUpsertDto } from '@core/data/DTO/levels';
 import { Level } from '@core/data/models';
 import { LevelRepository } from '@core/data';
 import { sortLevels } from '@shared/utils';
+import { InjectMapper } from '@automapper/nestjs';
+import { Mapper } from '@automapper/core';
 
 @Injectable()
 export class LevelsService {
-  constructor(private levelsRepository: LevelRepository) {}
+  constructor(
+    private levelsRepository: LevelRepository,
+    @InjectMapper() private _mapper: Mapper,
+  ) {}
 
   public async create(createLevelDto: LevelUpsertDto): Promise<Level> {
-    return this.levelsRepository.createLevel(createLevelDto);
+    const level = this._mapper.map(createLevelDto, Level, LevelUpsertDto);
+    return this.levelsRepository.createLevel(level);
     // const level = await getConnection()
     //   .createQueryBuilder()
     //   .insert()

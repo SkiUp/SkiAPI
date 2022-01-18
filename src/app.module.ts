@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
-import { AppService } from './app.service';
+import { AppService } from '@app/app.service';
 import { Asset, Exercise, Level, Mouvement } from '@core/data/models';
 import { MapperModule } from '@core/mapper/mapper.module';
-import { LevelsModule } from '@features/levels/levels.module';
+import { TheoryModule } from '@features/theory/theory.module';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { LevelsModule } from '@features/levels/levels.module';
       entities: [Level, Exercise, Asset, Mouvement],
       synchronize: true,
     }),
-    LevelsModule,
+    TheoryModule,
   ],
   providers: [AppService],
 })
