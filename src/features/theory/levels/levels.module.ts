@@ -1,24 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { Asset, Exercise, Level, Mouvement } from '@core/data/models';
-import { MapperModule } from '@core/mapper/mapper.module';
-import { LevelRepository } from '@core/data';
+import { MapperModule } from '@core/mapper';
 
 import { LevelsService } from './levels.service';
 import { LevelsController } from './levels.controller';
+import { ExerciseRepository, LevelRepository } from '@core/data';
 
 @Module({
-  imports: [
-    MapperModule,
-    TypeOrmModule.forFeature([
-      Level,
-      Exercise,
-      Mouvement,
-      Asset,
-      LevelRepository,
-    ]),
-  ],
+  imports: [MapperModule, TypeOrmModule.forFeature([LevelRepository])],
   providers: [LevelsService],
   controllers: [LevelsController],
   exports: [TypeOrmModule],

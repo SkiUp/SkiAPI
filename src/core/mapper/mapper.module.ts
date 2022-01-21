@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AutomapperModule } from '@automapper/nestjs';
 import { classes } from '@automapper/classes';
-import { LevelProfile } from './profiles/level-profile';
+import { ExerciseProfile, LevelProfile } from './profiles';
 
 @Module({
-  providers: [LevelProfile],
+  providers: [LevelProfile, ExerciseProfile],
   imports: [
     AutomapperModule.forRoot({
       options: [{ name: 'classMapper', pluginInitializer: classes }],

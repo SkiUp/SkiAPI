@@ -25,17 +25,16 @@ export class Exercise extends AuditableEntity {
   @Column({ type: 'enum', enum: ExeriseTypes })
   type: ExeriseTypes;
 
-  @ManyToOne(
-    () => Level,
-    level => level.exercises,
-  )
+  @ManyToOne(() => Level, (level) => level.exercises)
   level: Level;
+  @Column()
+  levelId: string;
 
-  @ManyToMany(
-    () => Mouvement,
-    type => type.exerises,
-  )
+  @ManyToMany(() => Mouvement, (type) => type.exerises)
   mouvement: Mouvement;
+  @Column()
+  mouvementId: string;
+
   @Column()
   isOfficial: boolean;
 

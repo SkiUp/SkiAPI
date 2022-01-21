@@ -1,2 +1,3 @@
-export * from './exercise-create.dto';
-export * from './exercise-update.dto';
+export * from './exercise-upsert.dto';
+export * from './index';
+export * from './queries';

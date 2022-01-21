@@ -14,14 +14,10 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { InjectMapper } from '@automapper/nestjs';
 import { Mapper } from '@automapper/core';
 
-import {
-  LevelDto,
-  LevelsQueryDto,
-  LevelUpsertDto,
-} from '@core/data/DTO/levels';
+import { Level, LevelDto, LevelUpsertDto } from '@core/data';
 
-import { Level } from '@core/data/models';
 import { LevelsService } from './levels.service';
+import { LevelsQueryDto } from '@app/core/data/DTO/levels/queries/levels-query.dto';
 
 @ApiTags('Levels')
 @Controller('levels')
@@ -52,16 +48,7 @@ export class LevelsController {
 
   @Get()
   @ApiOperation({ summary: 'Retrieve all Level' })
-  @ApiResponse({
-    status: 200,
-    type: LevelDto,
-    isArray: true,
-  })
-  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Unauthorised.',
-  })
+  @ApiResponse({ status: 200, type: LevelDto, isArray: true })
   public async findAll(@Query() query: unknown): Promise<LevelDto[]> {
     const levels = await this.levelsService.findAll(new LevelsQueryDto(query));
     const output = this._mapper.mapArray(levels, LevelDto, Level);
@@ -70,27 +57,14 @@ export class LevelsController {
 
   @Get(':id')
   @ApiOperation({ summary: "Get a Level by it's id" })
-  @ApiResponse({
-    status: 200,
-    description: 'The created Level',
-    type: LevelDto,
-  })
-  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden' })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Unauthorised',
-  })
+  @ApiResponse({ status: 200, type: LevelDto })
   public async findOne(@Param('id') id: string) {
     return this.levelsService.findOne(id);
   }
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a Level' })
-  @ApiResponse({
-    status: 200,
-    description: ' Updated Level',
-    type: LevelDto,
-  })
+  @ApiResponse({ status: 200, type: LevelDto })
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -105,11 +79,7 @@ export class LevelsController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a Level' })
-  @ApiResponse({
-    status: 200,
-    description: 'Deleted Level',
-    type: LevelDto,
-  })
+  @ApiResponse({ status: 200, type: LevelDto })
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Forbidden.' })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,

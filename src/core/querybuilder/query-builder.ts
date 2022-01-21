@@ -9,7 +9,9 @@ export function QueryBuilder<TEntity>(query: GenericQuery): Promise<TEntity[]> {
     .createQueryBuilder(query.className)
     .where('1 < 5');
 
-  if (query.filters){
+  console.log(builder);
+
+  if (query.filters) {
     for (const filter of query.filters) {
       let isValidValue = true;
       if (filter.filterType === 'property') {
@@ -27,7 +29,9 @@ export function QueryBuilder<TEntity>(query: GenericQuery): Promise<TEntity[]> {
       } else {
         builder = toSqlOperation(builder, filter);
       }
-    }}
+    }
+  }
+  console.log(builder.getQueryAndParameters());
   return builder.getMany();
 }
 
@@ -35,12 +39,14 @@ function toSqlOperation<T>(
   builder: SelectQueryBuilder<any>,
   query: QueryFilters<T>,
 ) {
+  console.log(query);
   if (
     query.filterType === 'property' &&
     (query.queryOperator === QueryOperators.IN ||
       query.queryOperator === QueryOperators.NOT_IN)
   ) {
     // TODO throw error?
+    console.log(47);
     return builder;
   }
   if (query.filterType === 'object') {
@@ -50,20 +56,25 @@ function toSqlOperation<T>(
 
   // TODO CHECK IF NUMERAL OPERATIONS ARE GIVEN NUMBERS AND NOT STRINGS
   const whereString = `${query.propertyName} ${query.queryOperator} :${query.propertyName}`;
-  if (
-    query.filterType === 'array' &&
-    !(
-      query.queryOperator === QueryOperators.IN ||
-      query.queryOperator === QueryOperators.NOT_IN
-    )
-  ) {
-    for (const item of query.value) {
-      builder = builder.andWhere(whereString, {
-        [query.propertyName]: wrapValue(item, query.queryOperator),
-      });
+  if (query.filterType === 'array') {
+    if (
+      !(
+        query.queryOperator === QueryOperators.IN ||
+        query.queryOperator === QueryOperators.NOT_IN
+      )
+    ) {
+      for (const item of query.value) {
+        builder = builder.andWhere(whereString, {
+          [query.propertyName]: wrapValue(item, query.queryOperator),
+        });
+      }
+    }else{
+      builder = builder.where()
     }
+    console.log(68);
     return builder;
-  } else if (query.filterType === 'property') {
+  } else {
+    console.log(71);
     return builder.andWhere(whereString, {
       [query.propertyName]: wrapValue(query.value, query.queryOperator),
     });
@@ -74,7 +85,7 @@ function wrapValue(value: unknown, queryOperator: QueryOperators) {
   switch (queryOperator) {
     case QueryOperators.IN:
     case QueryOperators.NOT_IN:
-      return `(${value})`;
+      return `('${value}')`;
     case QueryOperators.LIKE:
     case QueryOperators.NOT_LIKE:
       return `%${value}%`;

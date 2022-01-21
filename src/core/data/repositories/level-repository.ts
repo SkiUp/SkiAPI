@@ -9,25 +9,24 @@ export class LevelRepository extends Repository<Level> {
     return this.save<Level>(level);
   }
 
-  public async getLevelById(id: string): Promise<Level> {
-    return await this.findOne(id);
+  public getLevelById(id: string): Promise<Level> {
+    return this.findOne(id);
   }
 
   public getLevels(query: LevelsQueryDto): Promise<Level[]> {
     return QueryBuilder<Level>(query);
   }
 
-  public async getLevelByPages(
+  public getLevelByPages(
     currentPage: number,
     pageSize: number,
   ): Promise<Level[]> {
     let order: { [key: string]: 'ASC' | 'DESC' } = {};
     order['name'] = 'ASC';
-    let levels = await this.find({
+    return this.find({
       order: order,
       skip: (currentPage - 1) * pageSize,
       take: pageSize,
     });
-    return levels;
   }
 }

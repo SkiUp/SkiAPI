@@ -1,22 +1,38 @@
+import { Mapper } from '@automapper/core';
+import { InjectMapper } from '@automapper/nestjs';
 import { Injectable } from '@nestjs/common';
-import { CreateExerciceDto } from './dto/create-exercice.dto';
-import { UpdateExerciceDto } from './dto/update-exercice.dto';
+import {
+  ExerciseUpsertDto,
+  ExerciseRepository,
+  Exercise,
+  ExercisesQueryDto,
+} from '@core/data';
+import { QueryBuilder } from '@app/core/querybuilder';
 
 @Injectable()
-export class exerciseservice {
-  create(createExerciceDto: CreateExerciceDto) {
-    return 'This action adds a new exercice';
+export class ExerciseService {
+  constructor(
+    private _repository: ExerciseRepository,
+    @InjectMapper() private _mapper: Mapper,
+  ) {}
+  public create(createExerciceDto: ExerciseUpsertDto) {
+    const exercise = this._mapper.map(
+      createExerciceDto,
+      Exercise,
+      ExerciseUpsertDto,
+    );
+    return this._repository.createExercise(exercise);
   }
 
-  public findAll() {
-    return `This action returns all exercice`;
+  public findAll(query: ExercisesQueryDto) {
+    return QueryBuilder(query);
   }
 
   public findOne(id: number) {
     return `This action returns a #${id} exercice`;
   }
 
-  public update(id: number, updateExerciceDto: UpdateExerciceDto) {
+  public update(id: number, updateExerciceDto: ExerciseUpsertDto) {
     return `This action updates a #${id} exercice`;
   }
 

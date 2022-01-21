@@ -6,24 +6,27 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
-import { exerciseservice } from './exercice.service';
-import { CreateExerciceDto } from './dto/create-exercice.dto';
-import { UpdateExerciceDto } from './dto/update-exercice.dto';
-import { LevelsQueryDto } from '@core/data/DTO/levels';
+import { ExerciseService } from './exercice.service';
+import {
+  ExercisesQueryDto,
+  ExerciseUpsertDto,
+  LevelsQueryDto,
+} from '@core/data';
 
-@Controller('exercice')
+@Controller('exercises')
 export class ExerciceController {
-  constructor(private readonly exerciseService: exerciseservice) {}
+  constructor(private readonly exerciseService: ExerciseService) {}
 
   @Post()
-  public create(@Body() createExerciceDto: CreateExerciceDto) {
+  public create(@Body() createExerciceDto: ExerciseUpsertDto) {
     return this.exerciseService.create(createExerciceDto);
   }
 
   @Get()
-  public findAll() {
-    return this.exerciseService.findAll();
+  public findAll(@Query() query: unknown) {
+    return this.exerciseService.findAll(new ExercisesQueryDto(query));
   }
 
   @Get(':id')
@@ -34,7 +37,7 @@ export class ExerciceController {
   @Patch(':id')
   public update(
     @Param('id') id: string,
-    @Body() updateExerciceDto: UpdateExerciceDto,
+    @Body() updateExerciceDto: ExerciseUpsertDto,
   ) {
     return this.exerciseService.update(+id, updateExerciceDto);
   }
