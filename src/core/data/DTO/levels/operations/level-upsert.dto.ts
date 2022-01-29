@@ -3,12 +3,14 @@ import {
   IsArray,
   IsNotEmpty,
   IsOptional,
+  IsUUID,
   MaxLength,
   MinLength,
 } from 'class-validator';
 
-import { IsNotWhitespace, IsValidUuid } from '@shared/validators';
+import { IsNotWhitespace } from '@shared/validators';
 import { Exercise } from '@core/data/models/levels';
+
 export class LevelUpsertDto {
   @ApiProperty()
   @IsNotEmpty()
@@ -22,7 +24,7 @@ export class LevelUpsertDto {
   description?: string;
 
   @ApiProperty()
-  @IsValidUuid()
+  @IsUUID()
   priorLevelId?: string;
 
   @ApiProperty()

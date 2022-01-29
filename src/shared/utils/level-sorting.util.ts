@@ -7,5 +7,8 @@ export function sortLevels(input: Level[], parentId = '', result: Level[] = []) 
       sortLevels(input, level.id, result);
     }
   });
+  if(result.length < input.length) {
+   return input;
+  }
   return result;
 }

@@ -24,9 +24,7 @@ export class LevelsService {
 
   public async findAll(query: GenericQuery): Promise<Level[]> {
     const levels = await this.levelsRepository.getLevels(query);
-    const output = sortLevels(levels);
-    console.log(output);
-    return output;
+    return sortLevels(levels);
   }
 
   public update(

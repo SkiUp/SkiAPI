@@ -1,3 +1,4 @@
+import { MouvementUpsertDto } from '@app/core/data';
 import {
   Controller,
   Get,
@@ -15,7 +16,7 @@ export class MouvementsController {
   constructor(private readonly mouvementsService: MouvementsService) {}
 
   @Post()
-  public create(@Body() createMouvementDto: unknown) {
+  public create(@Body() createMouvementDto: MouvementUpsertDto) {
     return this.mouvementsService.create(createMouvementDto);
   }
 

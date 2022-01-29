@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsUUID } from 'class-validator';
 import { SlopeTypes, ExeriseTypes } from '@core/data';
-import { IsNotWhitespace, IsValidUuid } from '@shared/validators';
+import { IsNotWhitespace } from '@shared/validators';
 import { AssetDto } from '../../../core/asset.dto';
 
 export class ExerciseUpsertDto {
@@ -17,11 +17,11 @@ export class ExerciseUpsertDto {
   type: ExeriseTypes;
 
   @ApiProperty()
-  @IsValidUuid()
+  @IsUUID()
   levelId: string;
 
   @ApiProperty()
-  @IsValidUuid()
+  @IsUUID()
   mouvementId: string;
 
   @ApiProperty()

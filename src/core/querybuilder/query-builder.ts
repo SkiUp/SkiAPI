@@ -5,11 +5,9 @@ import { GenericQuery } from './interfaces/generic-query';
 import { QueryFilters } from './interfaces/query-filters';
 
 export function QueryBuilder<TEntity>(query: GenericQuery): Promise<TEntity[]> {
-  let builder = getRepository<TEntity>(query.className)
-    .createQueryBuilder(query.className)
-    .where('1 < 5');
-
-  console.log(builder);
+  let builder = getRepository<TEntity>(query.className).createQueryBuilder(
+    query.className,
+  );
 
   if (query.filters) {
     for (const filter of query.filters) {
@@ -31,7 +29,7 @@ export function QueryBuilder<TEntity>(query: GenericQuery): Promise<TEntity[]> {
       }
     }
   }
-  console.log(builder.getQueryAndParameters());
+  console.log(builder.getSql(), builder.getParameters());
   return builder.getMany();
 }
 
@@ -39,14 +37,12 @@ function toSqlOperation<T>(
   builder: SelectQueryBuilder<any>,
   query: QueryFilters<T>,
 ) {
-  console.log(query);
   if (
     query.filterType === 'property' &&
     (query.queryOperator === QueryOperators.IN ||
       query.queryOperator === QueryOperators.NOT_IN)
   ) {
     // TODO throw error?
-    console.log(47);
     return builder;
   }
   if (query.filterType === 'object') {
@@ -58,23 +54,34 @@ function toSqlOperation<T>(
   const whereString = `${query.propertyName} ${query.queryOperator} :${query.propertyName}`;
   if (query.filterType === 'array') {
     if (
-      !(
-        query.queryOperator === QueryOperators.IN ||
-        query.queryOperator === QueryOperators.NOT_IN
-      )
+      query.queryOperator !== QueryOperators.IN &&
+      query.queryOperator !== QueryOperators.NOT_IN
     ) {
       for (const item of query.value) {
         builder = builder.andWhere(whereString, {
           [query.propertyName]: wrapValue(item, query.queryOperator),
         });
       }
-    }else{
-      builder = builder.where()
+    } else {
+      let inString = `${query.propertyName} ${query.queryOperator} (`;
+
+      const values: { [key: string]: string } = {};
+
+      for (let i = 0; i < query.value.length; i++) {
+        const element = query.value[i];
+        values[`entry${i}`] = wrapValue(element, query.queryOperator) as string;
+        if (i === query.value.length - 1) {
+          inString += `:entry${i})`;
+        } else {
+          inString += `:entry${i},`;
+        }
+      }
+      builder = builder.andWhere(inString, values);
+
+      return builder;
     }
-    console.log(68);
     return builder;
   } else {
-    console.log(71);
     return builder.andWhere(whereString, {
       [query.propertyName]: wrapValue(query.value, query.queryOperator),
     });
@@ -83,12 +90,11 @@ function toSqlOperation<T>(
 
 function wrapValue(value: unknown, queryOperator: QueryOperators) {
   switch (queryOperator) {
-    case QueryOperators.IN:
-    case QueryOperators.NOT_IN:
-      return `('${value}')`;
     case QueryOperators.LIKE:
     case QueryOperators.NOT_LIKE:
       return `%${value}%`;
+    case QueryOperators.IN:
+    case QueryOperators.NOT_IN:
     case QueryOperators.NOT_EQUAL:
     case QueryOperators.EQUAL:
     case QueryOperators.GREATER_THAN:

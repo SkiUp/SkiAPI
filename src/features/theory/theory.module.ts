@@ -8,6 +8,7 @@ import {
   Asset,
   LevelRepository,
   ExerciseRepository,
+  MouvementRepository,
 } from '@core/data';
 import { ExerciceModule } from './exercice';
 import { LevelsModule } from './levels';
@@ -23,6 +24,7 @@ import { MapperModule } from '@core/mapper';
       Asset,
       LevelRepository,
       ExerciseRepository,
+      MouvementRepository
     ]),
     MapperModule,
     LevelsModule,

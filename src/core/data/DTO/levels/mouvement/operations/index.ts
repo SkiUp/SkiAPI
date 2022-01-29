@@ -1,2 +1,1 @@
-export * from './mouvement-create.dto';
-export * from './mouvement-update.dto';
+export * from './mouvement-upsert.dto';

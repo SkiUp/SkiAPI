@@ -1,0 +1,28 @@
+version: '1.0'
+
+services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 'neg6fMmDD8UBP3N9'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'P@ssw0rd'
+      MYSQL_DATABASE: 'skiv3'
+  api:
+    image: skiup/api
+    restart: always
+    environment:
+      DB_TYPE: 'mysql'
+      DB_HOST: 'database'
+      DB_PORT: '3306'
+      DB_USER: 'user'
+      DB_PASSWORD: 'P@ssw0rd'
+      DB_NAME: 'skiv3'
+    links:
+      - "db:database"
+    ports:
+      - "8080:3000"

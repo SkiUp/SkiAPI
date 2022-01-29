@@ -1,9 +1,19 @@
-import { MouvementCategory } from "../../../enum";
+import { ApiProperty } from '@nestjs/swagger';
+import { MouvementCategory } from '../../../enum';
 
-export interface MouvementDto{
-    id: string;
-    name: string;
-    description: string;
-    mouvementCategory: MouvementCategory;
-    startLevelId: string;
+export class MouvementDto {
+  @ApiProperty()
+  id: string;
+
+  @ApiProperty()
+  name: string;
+
+  @ApiProperty()
+  description: string;
+
+  @ApiProperty()
+  mouvementCategory: MouvementCategory;
+
+  @ApiProperty()
+  startLevelId: string;
 }

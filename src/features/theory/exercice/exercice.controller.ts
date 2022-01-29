@@ -25,8 +25,10 @@ export class ExerciceController {
   }
 
   @Get()
-  public findAll(@Query() query: unknown) {
-    return this.exerciseService.findAll(new ExercisesQueryDto(query));
+  public async findAll(@Query() query: unknown) {
+    const data = await this.exerciseService.findAll(new ExercisesQueryDto(query));
+    console.log('exercises',data)
+    return data;
   }
 
   @Get(':id')

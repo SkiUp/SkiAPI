@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { MapperModule } from '@core/mapper';
+import { LevelRepository } from '@core/data';
 
 import { LevelsService } from './levels.service';
 import { LevelsController } from './levels.controller';
-import { ExerciseRepository, LevelRepository } from '@core/data';
 
 @Module({
   imports: [MapperModule, TypeOrmModule.forFeature([LevelRepository])],

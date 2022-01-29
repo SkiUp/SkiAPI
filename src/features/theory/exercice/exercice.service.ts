@@ -24,8 +24,11 @@ export class ExerciseService {
     return this._repository.createExercise(exercise);
   }
 
-  public findAll(query: ExercisesQueryDto) {
-    return QueryBuilder(query);
+  public async findAll(query: ExercisesQueryDto) {
+    console.log(query.filters[0].value)
+    const data = await QueryBuilder(query);
+    console.log(data)
+    return data;
   }
 
   public findOne(id: number) {
