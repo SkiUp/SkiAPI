@@ -1,2 +1,1 @@
-export * from './exercise-profile';
-export * from './level-profile';
+export * from './theory';

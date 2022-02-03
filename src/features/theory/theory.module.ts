@@ -4,32 +4,33 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   Level,
   Exercise,
-  Mouvement,
+  Movement,
   Asset,
   LevelRepository,
   ExerciseRepository,
-  MouvementRepository,
+  MovementRepository,
 } from '@core/data';
+import { MapperModule } from '@core/mapper';
+
 import { ExerciceModule } from './exercice';
 import { LevelsModule } from './levels';
-import { MouvementsModule } from './mouvements';
-import { MapperModule } from '@core/mapper';
+import { MovementsModule } from './movements';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       Level,
       Exercise,
-      Mouvement,
+      Movement,
       Asset,
       LevelRepository,
       ExerciseRepository,
-      MouvementRepository
+      MovementRepository
     ]),
     MapperModule,
     LevelsModule,
     ExerciceModule,
-    MouvementsModule,
+    MovementsModule,
   ],
   exports: [TypeOrmModule],
 })

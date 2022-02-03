@@ -3,35 +3,36 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   UpdateDateColumn,
-} from 'typeorm';
+} from 'typeorm'
 
 export abstract class AuditableEntity {
   @Column()
-  createdById: string;
+  createdById: string
 
   @Column()
-  updatedById: string;
+  updatedById?: string
 
-  @Column()
-  deletedById: string;
+  @Column({ nullable: true })
+  deletedById?: string
 
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
-  public createdAt: Date;
+  public createdAt?: Date
 
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
-  public updatedAt: Date;
+  public updatedAt?: Date
 
   @DeleteDateColumn({
+    nullable: true,
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
-  public deletedAt: Date;
+  public deletedAt?: Date
 }

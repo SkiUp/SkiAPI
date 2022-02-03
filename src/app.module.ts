@@ -3,9 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
 import { AppService } from '@app/app.service';
-import { Asset, Exercise, Level, Mouvement } from '@core/data/models';
+import { Asset, Exercise, Level, Movement } from '@core/data/models';
 import { MapperModule } from '@core/mapper/mapper.module';
 import { TheoryModule } from '@features/theory/theory.module';
+import { TheoryFactory } from './core/factories/theory/theory.factory';
 
 @Module({
   imports: [
@@ -22,12 +23,12 @@ import { TheoryModule } from '@features/theory/theory.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Level, Exercise, Asset, Mouvement],
+      entities: [Level, Exercise, Asset, Movement],
       synchronize: true,
       cache:false
     }),
     TheoryModule,
   ],
-  providers: [AppService],
+  providers: [AppService, TheoryFactory],
 })
 export class AppModule {}
